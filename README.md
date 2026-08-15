@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Time Portfolio
 
-## Getting Started
+Time Portfolio is a habit-tracking app where users create habit pots, invest time into them, and monitor whether they are staying on track using daily effort, weekly frequency, and a maturation score model.
 
-First, run the development server:
+## Local developer workflow
+
+Use Supabase migrations as the source of truth for schema changes.
+
+1. Make a schema change in a new SQL migration under `supabase/migrations/`.
+2. Run the local migration check and tests before shipping changes.
+3. Push the migration using the Supabase CLI.
+4. Deploy the application after the database and app are both verified.
+
+Example workflow:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+supabase migration new <name>
+supabase db push
+npm run verify
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Verification commands
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run typecheck
+npm run lint
+npm run test
+npm run verify:db
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The database verification script confirms the repository includes the expected migrations for the core schema, row-level security, and atomic score logging functions.
 
-## Learn More
+## Reliability notes
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Keep all schema, RLS, function, and index changes in timestamped migration files.
+- Do not use destructive database resets in active environments.
+- Preserve existing user data while reconciling any live schema drift.
+- Treat the database as the authoritative system for scoring, not the UI layer.

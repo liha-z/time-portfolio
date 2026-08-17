@@ -1,3 +1,5 @@
+
+//not an important file, all logic is being calcualted on server side, this is duplication.
 import { normalizeDifficulty } from './habit-scoring'
 
 const DAY_MS = 24 * 60 * 60 * 1000

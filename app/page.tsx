@@ -1,12 +1,11 @@
 import { createClient } from '../lib/server'
 import { redirect } from 'next/navigation'
-import CreatePotForm from './components/CreatePotForm'
 import RiverComponent from './components/RiverComponent'
-import PotsList from './components/PotsList'
+import DashboardClient from './components/DashboardClient'
+import AppLayout from './components/AppLayout'
 
 export default async function Home() {
   const supabase = await createClient()
-  
   // Check if the user is authenticated
   const { data: { user }, error } = await supabase.auth.getUser()
 
@@ -22,20 +21,14 @@ export default async function Home() {
     .order('creation_date', { ascending: false })
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-24">
-      <h1 className="text-3xl font-bold mb-4">Time Portfolio Dashboard</h1>
-      <p className="text-gray-600 mb-8">Logged in as: {user.email}</p>
-      
-      {/* River Component - Shows remaining time in the day */}
-      <div className="w-full max-w-2xl mb-8">
-        <RiverComponent />
+    <AppLayout>
+      <div className="flex flex-col items-center p-8 sm:p-12 md:p-24 bg-white text-gray-900">
+        {/* River Component - Shows remaining time in the day */}
+        <div className="w-full max-w-2xl mb-8">
+          <RiverComponent />
+        </div>
+        <DashboardClient pots={pots || []} potsError={potsError} />
       </div>
-      
-      {/* Form to create a new pot */}
-      <CreatePotForm />
-
-      {/* Display existing pots with Invest/End functionality */}
-      <PotsList pots={pots || []} potsError={potsError} />
-    </main>
+    </AppLayout>
   )
 }

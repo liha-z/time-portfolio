@@ -59,17 +59,17 @@ export default function CreatePotForm() {
   }
 
   return (
-    <div className="w-full max-w-2xl bg-gray-800 rounded-lg p-6 text-white">
+    <div className="w-full max-w-2xl bg-white rounded-lg p-6 text-gray-900">
       <h2 className="text-xl font-bold mb-6">Create a New Habit Pot</h2>
 
       {error && (
-        <div className="mb-4 p-3 bg-red-900 text-red-100 rounded">
+        <div className="mb-4 p-3 bg-red-100 text-red-800 rounded">
           {error}
         </div>
       )}
 
       {success && (
-        <div className="mb-4 p-3 bg-green-900 text-green-100 rounded">
+        <div className="mb-4 p-3 bg-green-100 text-green-800 rounded">
           ✓ Pot created successfully!
         </div>
       )}
@@ -84,7 +84,7 @@ export default function CreatePotForm() {
             id="name"
             name="name"
             placeholder="e.g., Morning Exercise, Reading"
-            className="w-full px-4 py-2 rounded bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500"
+            className="w-full px-4 py-2 rounded bg-gray-100 border border-gray-300 text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-500"
             required
           />
         </div>
@@ -100,8 +100,7 @@ export default function CreatePotForm() {
             value={targetMinutesPerDay}
             onChange={(event) => setTargetMinutesPerDay(Number(event.target.value) || 1)}
             placeholder="e.g., 30"
-            min="1"
-            className="w-full px-4 py-2 rounded bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500"
+            min="1" className="w-full px-4 py-2 rounded bg-gray-100 border border-gray-300 text-gray-900 placeholder-gray-500 focus:outline-none focus:border-blue-500"
             required
           />
         </div>
@@ -121,7 +120,7 @@ export default function CreatePotForm() {
             onChange={(event) => setDifficulty(Number(event.target.value))}
             className="w-full accent-blue-500"
           />
-          <div className="mt-2 flex items-center justify-between text-xs text-gray-300">
+          <div className="mt-2 flex items-center justify-between text-xs text-gray-600">
             <span>Easy</span>
             <span className="font-bold text-blue-300">{difficulty}/10</span>
             <span>Hard</span>
@@ -137,7 +136,7 @@ export default function CreatePotForm() {
             name="frequency_per_week"
             value={frequencyPerWeek}
             onChange={(event) => setFrequencyPerWeek(Number(event.target.value))}
-            className="w-full px-4 py-2 rounded bg-gray-700 border border-gray-600 text-white focus:outline-none focus:border-blue-500"
+            className="w-full px-4 py-2 rounded bg-gray-100 border border-gray-300 text-gray-900 focus:outline-none focus:border-blue-500"
             required
           >
             <option value="1">Once a week</option>
@@ -150,10 +149,10 @@ export default function CreatePotForm() {
           </select>
         </div>
 
-        <div className="rounded bg-gray-700 p-4 border border-gray-600">
-          <div className="text-sm text-gray-300">Calculated target window</div>
+        <div className="rounded bg-gray-100 p-4 border border-gray-300">
+          <div className="text-sm text-gray-600">Calculated target window</div>
           <div className="mt-1 text-2xl font-bold text-green-400">{dTarget} days</div>
-          <div className="mt-1 text-xs text-gray-400">
+          <div className="mt-1 text-xs text-gray-500">
             Based on a 21-day baseline, {difficulty}/10 difficulty, {frequencyPerWeek}x/week, and {targetMinutesPerDay} minutes/day
           </div>
         </div>

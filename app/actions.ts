@@ -135,3 +135,34 @@ export async function logTimeInvestment(potId: string, elapsedMinutes: number) {
   revalidatePath('/')
   return { success: true, data: data[0] }
 }
+
+export async function deletePot(potId: string) {
+  const supabase = await createClient()
+
+  // Get the current user's session
+  const {
+    data: { user },
+    error: userError,
+  } = await supabase.auth.getUser()
+
+  if (userError || !user) {
+    return { error: 'Unauthorized' }
+  }
+
+  if (!potId) {
+    return { error: 'Invalid pot ID' }
+  }
+
+  // Delete the pot from the database, ensuring the user owns the pot.
+  const { error } = await supabase.from('pots').delete().match({ id: potId, user_id: user.id })
+
+  if (error) {
+    console.error('Failed to delete pot:', error)
+    return { error: 'Unable to delete this pot. Please try again.' }
+  }
+
+  // Revalidate the path to refresh the UI.
+  revalidatePath('/')
+
+  return { success: true }
+}

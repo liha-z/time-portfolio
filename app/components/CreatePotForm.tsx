@@ -4,7 +4,9 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { createPot } from '../actions'
 import { calculateDTarget } from '../../lib/habit-scoring'
 
-export default function CreatePotForm() {
+export default function CreatePotForm({
+  onPotCreated,
+}: { onPotCreated?: () => void }) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
@@ -48,7 +50,11 @@ export default function CreatePotForm() {
         setTargetMinutesPerDay(30)
         setDifficulty(5)
         setFrequencyPerWeek(7)
-        setTimeout(() => setSuccess(false), 3000)
+        if (onPotCreated) {
+          setTimeout(onPotCreated, 1000) // Close modal after 1 second
+        } else {
+          setTimeout(() => setSuccess(false), 3000) // Fallback if no prop is passed
+        }
       }
     } catch (err) {
       setError('An unexpected error occurred')

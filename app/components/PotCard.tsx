@@ -93,6 +93,8 @@ export default function PotCard({
     }
   }
 
+  const progress = pot.m_target > 0 ? Math.min((pot.current_score / pot.m_target) * 100, 100) : 0
+
   return (
     <div
       className={`flex flex-col justify-between bg-gray-700 rounded-lg p-4 border-2 transition-all ${
@@ -102,27 +104,26 @@ export default function PotCard({
       <div>
         <div className="flex justify-between items-start mb-2">
           <h3 className="text-lg font-semibold text-white pr-2">{pot.name}</h3>
-          {isActive && (
-            <div className="text-2xl font-bold text-green-400 animate-pulse flex-shrink-0">
-              {formatElapsedTime(elapsedTime)}
-            </div>
-          )}
         </div>
 
-        <div className="text-sm mb-4">
-          <p className="text-gray-400">Score</p>
-          <p className="text-green-400 font-bold text-lg">
-            {pot.current_score.toFixed(1)} / {pot.m_target.toFixed(1)}
-          </p>
+        <div className="text-sm mb-4 space-y-1">
+          <div className="flex justify-between items-baseline">
+            <p className="text-gray-400">Score</p>
+            <p className="text-gray-300 font-mono text-xs">
+              {pot.current_score.toFixed(1)} / {pot.m_target.toFixed(1)}
+            </p>
+          </div>
+          <div className="w-full bg-gray-600 rounded-full h-2">
+            <div
+              className="bg-green-400 h-2 rounded-full transition-all duration-500"
+              style={{ width: `${progress}%` }}
+            ></div>
+          </div>
         </div>
       </div>
 
       <div>
-        <div className="flex justify-end items-center text-xs text-gray-500 mb-3">
-          <button onClick={handleDelete} className="text-gray-400 hover:text-red-400 transition-colors p-1 rounded">
-            Delete
-          </button>
-        </div>
+        <div className="h-8 mb-3"></div>
 
         {error && <p className="mb-3 text-sm text-red-300">{error}</p>}
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { ChevronLeft, ChevronRight, LayoutDashboard, LogOut } from 'lucide-react'
+import { Archive, ChevronLeft, ChevronRight, LayoutDashboard, LogOut, User } from 'lucide-react'
 import { logout } from '../components/actions'
 
 interface SidebarProps {
@@ -22,12 +22,19 @@ export default function Sidebar({ isCollapsed, toggleSidebar }: SidebarProps) {
           </button>
         </div>
         <div className="flex flex-col justify-between flex-grow">
-          <nav className="px-4 pt-4">
+          <nav className="flex flex-col gap-y-2 px-4 pt-4">
             <a href="/" className="flex items-center p-3 rounded-lg bg-gray-700">
               <LayoutDashboard size={24} />
-              {!isCollapsed && <span className="ml-4 font-semibold">Dashboard</span>}
+              {!isCollapsed && <span className="ml-4 font-semibold">Home</span>}
             </a>
-            {/* Add more navigation links here */}
+            <a href="#" className="flex items-center p-3 rounded-lg hover:bg-gray-700">
+              <Archive size={24} />
+              {!isCollapsed && <span className="ml-4 font-semibold">Manage Pots</span>}
+            </a>
+            <a href="#" className="flex items-center p-3 rounded-lg hover:bg-gray-700">
+              <User size={24} />
+              {!isCollapsed && <span className="ml-4 font-semibold">Profile</span>}
+            </a>
           </nav>
           <div className="p-4 border-t border-gray-800">
             <form action={logout}>

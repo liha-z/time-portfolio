@@ -78,11 +78,11 @@ export default function PotsList({ pots, potsError }: PotsListProps) {
   }
 
   return (
-    <div className="w-full max-w-2xl bg-gray-800 rounded-lg p-6 text-white mt-8">
+    <div className="w-full max-w-2xl">
       <h2 className="text-xl font-bold mb-4">Your Habit Pots</h2>
 
       {potsError ? (
-        <p className="text-red-400">Error loading pots: {potsError.message}</p>
+        <p className="text-red-600">Error loading pots: {potsError.message}</p>
       ) : potList && potList.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {potList.map((pot) => (
@@ -98,7 +98,7 @@ export default function PotsList({ pots, potsError }: PotsListProps) {
           ))}
         </div>
       ) : (
-        <p className="text-gray-400">No pots created yet. Create one above to get started!</p>
+        <p className="text-gray-500">No pots created yet. Create one to get started!</p>
       )}
     </div>
   )
